@@ -5,7 +5,7 @@ Safe, simple, configurable
 
 Handles recursive objects.
 
-Handles `Error` objects and allows you to specify your own error
+Handles `Error` objects and lets you specify your own error
 replacer function.
 
 Allows array replacers to either include or exclude keys.
