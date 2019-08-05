@@ -45,19 +45,23 @@ class AbcStringify {
         stack: value.stack
       } :
       value
-    this.replacerArrayIncludes = true
-    this.alwaysIncludeKeys = []
-    this.alwaysExcludeKeys = []
-    this.alwaysExcludeValues = []
-    this.excludeValuesContains = true
-    this.excludedValue = '***'
+    this.replacerArrayExcludes = false
+    this.includeKeys = []
+    this.excludeKeys = []
+    this.replaceValues = []
+    this.exactMatch = false
+    this.replacedValue = '***'
     this.space = null
-    this.excludeValuesReplacer = (key, value) =>
-      this.alwaysExcludeValues.includes(value) ? this.excludedValue : value
     this.replaceValuesReplacer = (key, value) => {
-      for (const ev of this.alwaysExcludeValues) {
+      for (const ev of this.replaceValues) {
         if (Object.prototype.toString.call(value) === '[object String]') {
-          return value.replace(ev, this.excludedValue)
+          if (this.exactMatch) {
+            if (value === ev) {
+              return this.replacedValue
+            }
+          } else {
+            value = value.replace(ev, this.replacedValue)
+          }
         }
       }
       return value
@@ -71,12 +75,12 @@ class AbcStringify {
     }
     replacer = replacer || this.replacer
     if (Array.isArray(replacer)) {
-      if (this.replacerArrayIncludes) {
-        replacer = replacer.concat(this.alwaysIncludeKeys)
-        replacer = includeReplacer(replacer)
-      } else {
-        replacer = replacer.concat(this.alwaysExcludeKeys)
+      if (this.replacerArrayExcludes) {
+        replacer = replacer.concat(this.excludeKeys)
         replacer = excludeReplacer(replacer)
+      } else {
+        replacer = replacer.concat(this.includeKeys)
+        replacer = includeReplacer(replacer)
       }
     }
     return JSON.stringify(
@@ -84,7 +88,6 @@ class AbcStringify {
       getMultiReplacer([
         getCircularReplacer(),
         replacer,
-        this.excludeValuesReplacer,
         this.replaceValuesReplacer,
         this.errorReplacer,
       ]),
@@ -115,12 +118,4 @@ if (require.main === module) {
   }
   o.circular = o
   console.log(ss.stringify(o, 2))
-
-  // let ss = new AbcStringify({
-  //   replacerArrayIncludes: false,
-  //   space: 2,
-  //   alwaysExcludeValues: ['string', 'three'],
-  //   // excludedValue: '***REDACTED***',
-  //   replacer: (key, value) => value
-  // })
 }

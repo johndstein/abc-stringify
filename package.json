@@ -1,8 +1,11 @@
 {
   "name": "abc-stringify",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Safe, simple, configurable JSON.stringify",
   "main": "index.js",
+  "scripts": {
+    "test": "./test.js"
+  },
   "author": "John Stein",
   "license": "Unlicense",
   "repository": {

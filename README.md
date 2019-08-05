@@ -10,8 +10,8 @@ replacer function.
 
 Allows array replacers to either include or exclude keys.
 
-Allows you to specify a list of values to exclude and/or replace
-(think passwords and keys in your config).
+Allows you to specify a list of values to replace (think passwords and
+keys in your config).
 
 Allows omitting the replacer parameter and just pass the space
 parameter.
