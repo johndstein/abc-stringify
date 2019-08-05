@@ -1,7 +1,8 @@
 {
   "name": "abc-stringify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Safe, simple, configurable JSON.stringify",
+  "keywords": ["JSON","stringify","recursive","safe","configurable","error","object","include","exclude","replace","values"],
   "main": "index.js",
   "scripts": {
     "test": "./test.js"
