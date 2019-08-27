@@ -67,6 +67,9 @@ class AbcStringify {
       return value
     }
     Object.assign(this, options)
+    if (this.replacerArrayExcludes && !this.replacer) {
+      this.replacer = []
+    }
   }
   stringify(value, replacer, space) {
     if (isStringOrNumber(replacer)) {
